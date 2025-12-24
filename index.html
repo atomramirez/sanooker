@@ -4,10 +4,11 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>FinTrack - จัดการการเงินส่วนบุคคล</title>
+    <title>SNK_ZD - จัดการการเงินส่วนบุคคล</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=Prompt:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <style>
         body {
             font-family: 'Prompt', sans-serif;
@@ -117,7 +118,7 @@
                     <div class="w-10 h-10 gradient-bg rounded-xl flex items-center justify-center shadow-lg"><i
                             class="fas fa-chart-line text-white text-xl"></i>
                     </div><span
-                        class="text-2xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-teal-700 to-teal-500">FinTrack</span>
+                        class="text-2xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-teal-700 to-teal-500">SNK_ZD</span>
                 </div>
                 <div class="hidden md:flex items-center space-x-8"><a href="#home"
                         class="text-gray-600 hover:text-teal-600 font-medium transition">หน้าแรก</a> <a
@@ -125,7 +126,8 @@
                     <a href="#transactions"
                         class="text-gray-600 hover:text-teal-600 font-medium transition">รายรับรายจ่าย</a> <a
                         href="#goals" class="text-gray-600 hover:text-teal-600 font-medium transition">เป้าหมาย</a> <a
-                        href="#news" class="text-gray-600 hover:text-teal-600 font-medium transition">ข่าว</a> <a
+                        href="#interests" class="text-gray-600 hover:text-teal-600 font-medium transition">ดอกเบี้ย</a>
+                    <a href="#news" class="text-gray-600 hover:text-teal-600 font-medium transition">ข่าว</a> <a
                         href="#calculator" class="text-gray-600 hover:text-teal-600 font-medium transition">เงินเฟ้อ</a>
                 </div>
                 <div class="flex items-center space-x-4" id="auth-buttons"><button onclick="showLogin()"
@@ -256,100 +258,25 @@
                 <div class="grid md:grid-cols-2 gap-6"><!-- Pie Chart -->
                     <div class="bg-white rounded-2xl p-8 shadow-soft">
                         <h3 class="text-xl font-bold text-gray-800 mb-6">สัดส่วนรายจ่าย</h3>
-                        <div class="flex items-center justify-center">
-                            <svg viewbox="0 0 200 200" class="w-64 h-64"><!-- Pie chart segments -->
-                                <circle cx="100" cy="100" r="80" fill="none" stroke="#10b981" stroke-width="40"
-                                    stroke-dasharray="125.6 502.4" transform="rotate(-90 100 100)" />
-                                <circle cx="100" cy="100" r="80" fill="none" stroke="#3b82f6" stroke-width="40"
-                                    stroke-dasharray="100.5 502.4" stroke-dashoffset="-125.6"
-                                    transform="rotate(-90 100 100)" />
-                                <circle cx="100" cy="100" r="80" fill="none" stroke="#f59e0b" stroke-width="40"
-                                    stroke-dasharray="75.4 502.4" stroke-dashoffset="-226.1"
-                                    transform="rotate(-90 100 100)" />
-                                <circle cx="100" cy="100" r="80" fill="none" stroke="#8b5cf6" stroke-width="40"
-                                    stroke-dasharray="62.8 502.4" stroke-dashoffset="-301.5"
-                                    transform="rotate(-90 100 100)" />
-                                <circle cx="100" cy="100" r="80" fill="none" stroke="#ec4899" stroke-width="40"
-                                    stroke-dasharray="50.2 502.4" stroke-dashoffset="-364.3"
-                                    transform="rotate(-90 100 100)" />
-                            </svg>
+                        <div class="flex items-center justify-center h-64">
+                            <canvas id="expensePieChart"></canvas>
                         </div>
-                        <div class="mt-6 space-y-3">
-                            <div class="flex items-center justify-between">
-                                <div class="flex items-center">
-                                    <div class="w-4 h-4 rounded-full bg-green-500 mr-3"></div><span
-                                        class="text-sm text-gray-700">อาหาร</span>
-                                </div><span class="text-sm font-semibold text-gray-800">25%</span>
-                            </div>
-                            <div class="flex items-center justify-between">
-                                <div class="flex items-center">
-                                    <div class="w-4 h-4 rounded-full bg-blue-500 mr-3"></div><span
-                                        class="text-sm text-gray-700">เดินทาง</span>
-                                </div><span class="text-sm font-semibold text-gray-800">20%</span>
-                            </div>
-                            <div class="flex items-center justify-between">
-                                <div class="flex items-center">
-                                    <div class="w-4 h-4 rounded-full bg-yellow-500 mr-3"></div><span
-                                        class="text-sm text-gray-700">ค่าบิล</span>
-                                </div><span class="text-sm font-semibold text-gray-800">15%</span>
-                            </div>
-                            <div class="flex items-center justify-between">
-                                <div class="flex items-center">
-                                    <div class="w-4 h-4 rounded-full bg-purple-500 mr-3"></div><span
-                                        class="text-sm text-gray-700">ช้อปปิ้ง</span>
-                                </div><span class="text-sm font-semibold text-gray-800">12.5%</span>
-                            </div>
-                            <div class="flex items-center justify-between">
-                                <div class="flex items-center">
-                                    <div class="w-4 h-4 rounded-full bg-pink-500 mr-3"></div><span
-                                        class="text-sm text-gray-700">อื่นๆ</span>
-                                </div><span class="text-sm font-semibold text-gray-800">10%</span>
-                            </div>
-                        </div>
-                    </div><!-- Bar Chart -->
+                    </div>
+
+                    <!-- Bar Chart -->
                     <div class="bg-white rounded-2xl p-8 shadow-soft">
-                        <h3 class="text-xl font-bold text-gray-800 mb-6">รายรับรายจ่ายรายเดือน</h3>
-                        <div class="flex items-end justify-between h-64 px-4">
-                            <div class="flex flex-col items-center space-y-2">
-                                <div class="w-12 bg-green-500 rounded-t-lg" style="height: 60%;"></div>
-                                <div class="w-12 bg-red-400 rounded-t-lg" style="height: 40%;"></div><span
-                                    class="text-xs text-gray-600">ม.ค.</span>
-                            </div>
-                            <div class="flex flex-col items-center space-y-2">
-                                <div class="w-12 bg-green-500 rounded-t-lg" style="height: 70%;"></div>
-                                <div class="w-12 bg-red-400 rounded-t-lg" style="height: 55%;"></div><span
-                                    class="text-xs text-gray-600">ก.พ.</span>
-                            </div>
-                            <div class="flex flex-col items-center space-y-2">
-                                <div class="w-12 bg-green-500 rounded-t-lg" style="height: 80%;"></div>
-                                <div class="w-12 bg-red-400 rounded-t-lg" style="height: 60%;"></div><span
-                                    class="text-xs text-gray-600">มี.ค.</span>
-                            </div>
-                            <div class="flex flex-col items-center space-y-2">
-                                <div class="w-12 bg-green-500 rounded-t-lg" style="height: 75%;"></div>
-                                <div class="w-12 bg-red-400 rounded-t-lg" style="height: 50%;"></div><span
-                                    class="text-xs text-gray-600">เม.ย.</span>
-                            </div>
-                            <div class="flex flex-col items-center space-y-2">
-                                <div class="w-12 bg-green-500 rounded-t-lg" style="height: 85%;"></div>
-                                <div class="w-12 bg-red-400 rounded-t-lg" style="height: 58%;"></div><span
-                                    class="text-xs text-gray-600">พ.ค.</span>
-                            </div>
-                            <div class="flex flex-col items-center space-y-2">
-                                <div class="w-12 bg-green-500 rounded-t-lg" style="height: 90%;"></div>
-                                <div class="w-12 bg-red-400 rounded-t-lg" style="height: 63%;"></div><span
-                                    class="text-xs text-gray-600">มิ.ย.</span>
+                        <div class="flex flex-col md:flex-row justify-between items-center mb-6">
+                            <h3 class="text-xl font-bold text-gray-800">สรุปรายรับรายจ่าย</h3>
+                            <div class="flex bg-gray-100 p-1 rounded-lg mt-4 md:mt-0">
+                                <!-- Removed Daily Button -->
+                                <button onclick="updateChart('weekly')" id="btn-weekly"
+                                    class="px-3 py-1 text-xs rounded-md font-medium transition-all bg-white shadow-sm text-teal-700">รายสัปดาห์</button>
+                                <button onclick="updateChart('monthly')" id="btn-monthly"
+                                    class="px-3 py-1 text-xs rounded-md font-medium transition-all text-gray-500 hover:text-gray-700">รายเดือน</button>
                             </div>
                         </div>
-                        <div class="flex justify-center space-x-6 mt-6">
-                            <div class="flex items-center">
-                                <div class="w-4 h-4 rounded bg-green-500 mr-2"></div><span
-                                    class="text-sm text-gray-700">รายรับ</span>
-                            </div>
-                            <div class="flex items-center">
-                                <div class="w-4 h-4 rounded bg-red-400 mr-2"></div><span
-                                    class="text-sm text-gray-700">รายจ่าย</span>
-                            </div>
+                        <div class="h-64 w-full">
+                            <canvas id="expenseChart"></canvas>
                         </div>
                     </div>
                 </div>
@@ -368,16 +295,16 @@
                     <h3 class="text-xl font-bold text-gray-800 mb-6">เพิ่มรายการใหม่</h3>
                     <form onsubmit="handleAddTransaction(event)" class="grid md:grid-cols-2 gap-6">
                         <div><label for="trans-type"
-                                class="block text-sm font-semibold text-gray-700 mb-2">ประเภท</label> <select
-                                id="trans-type" required>
+                                class="block text-sm font-semibold text-gray-700 mb-2">ประเภท</label>
+                            <select id="trans-type" required>
                                 <option value="">เลือกประเภท</option>
                                 <option value="income">รายรับ</option>
                                 <option value="expense">รายจ่าย</option>
                             </select>
                         </div>
                         <div><label for="trans-category"
-                                class="block text-sm font-semibold text-gray-700 mb-2">หมวดหมู่</label> <select
-                                id="trans-category" required>
+                                class="block text-sm font-semibold text-gray-700 mb-2">หมวดหมู่</label>
+                            <select id="trans-category" required>
                                 <option value="">เลือกหมวดหมู่</option>
                                 <option value="food">🍜 อาหาร</option>
                                 <option value="transport">🚗 เดินทาง</option>
@@ -397,12 +324,12 @@
                                 id="trans-date" required>
                         </div>
                         <div class="md:col-span-2"><label for="trans-note"
-                                class="block text-sm font-semibold text-gray-700 mb-2">หมายเหตุ</label> <input
-                                type="text" id="trans-note" placeholder="ระบุรายละเอียด (ถ้ามี)">
+                                class="block text-sm font-semibold text-gray-700 mb-2">หมายเหตุ</label>
+                            <input type="text" id="trans-note" placeholder="ระบุรายละเอียด (ถ้ามี)">
                         </div>
                         <div class="md:col-span-2 flex justify-end space-x-4"><button type="button"
-                                class="btn-secondary" onclick="toggleTransactionForm()">ยกเลิก</button> <button
-                                type="submit" class="btn-primary">บันทึก</button>
+                                class="btn-secondary" onclick="toggleTransactionForm()">ยกเลิก</button>
+                            <button type="submit" class="btn-primary">บันทึก</button>
                         </div>
                     </form>
                 </div><!-- Transactions Table -->
@@ -411,11 +338,16 @@
                         <table class="w-full">
                             <thead class="bg-gray-50">
                                 <tr>
-                                    <th class="px-6 py-4 text-left text-sm font-semibold text-gray-700">วันที่</th>
-                                    <th class="px-6 py-4 text-left text-sm font-semibold text-gray-700">หมวดหมู่</th>
-                                    <th class="px-6 py-4 text-left text-sm font-semibold text-gray-700">รายละเอียด</th>
-                                    <th class="px-6 py-4 text-right text-sm font-semibold text-gray-700">จำนวนเงิน</th>
-                                    <th class="px-6 py-4 text-center text-sm font-semibold text-gray-700">การกระทำ</th>
+                                    <th class="px-6 py-4 text-left text-sm font-semibold text-gray-700">
+                                        วันที่</th>
+                                    <th class="px-6 py-4 text-left text-sm font-semibold text-gray-700">
+                                        หมวดหมู่</th>
+                                    <th class="px-6 py-4 text-left text-sm font-semibold text-gray-700">
+                                        รายละเอียด</th>
+                                    <th class="px-6 py-4 text-right text-sm font-semibold text-gray-700">
+                                        จำนวนเงิน</th>
+                                    <th class="px-6 py-4 text-center text-sm font-semibold text-gray-700">
+                                        การกระทำ</th>
                                 </tr>
                             </thead>
                             <tbody class="divide-y divide-gray-200">
@@ -439,20 +371,21 @@
                     <h3 class="text-xl font-bold text-gray-800 mb-6">สร้างเป้าหมายใหม่</h3>
                     <form onsubmit="handleAddGoal(event)" class="grid md:grid-cols-2 gap-6">
                         <div class="md:col-span-2"><label for="goal-name"
-                                class="block text-sm font-semibold text-gray-700 mb-2">ชื่อเป้าหมาย</label> <input
-                                type="text" id="goal-name" placeholder="เช่น ซื้อรถยนต์" required>
+                                class="block text-sm font-semibold text-gray-700 mb-2">ชื่อเป้าหมาย</label>
+                            <input type="text" id="goal-name" placeholder="เช่น ซื้อรถยนต์" required>
                         </div>
                         <div><label for="goal-target" class="block text-sm font-semibold text-gray-700 mb-2">เป้าหมาย
                                 (บาท)</label> <input type="number" id="goal-target" placeholder="0.00" step="0.01"
                                 required>
                         </div>
                         <div><label for="goal-current"
-                                class="block text-sm font-semibold text-gray-700 mb-2">ยอดปัจจุบัน (บาท)</label> <input
-                                type="number" id="goal-current" placeholder="0.00" step="0.01" required>
+                                class="block text-sm font-semibold text-gray-700 mb-2">ยอดปัจจุบัน
+                                (บาท)</label> <input type="number" id="goal-current" placeholder="0.00" step="0.01"
+                                required>
                         </div>
                         <div><label for="goal-deadline"
-                                class="block text-sm font-semibold text-gray-700 mb-2">กำหนดเวลา</label> <input
-                                type="date" id="goal-deadline" required>
+                                class="block text-sm font-semibold text-gray-700 mb-2">กำหนดเวลา</label>
+                            <input type="date" id="goal-deadline" required>
                         </div>
                         <div><label for="goal-icon" class="block text-sm font-semibold text-gray-700 mb-2">ไอคอน</label>
                             <select id="goal-icon" required>
@@ -474,6 +407,19 @@
                 </div><!-- Goals Grid -->
                 <div id="goals-grid" class="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
                     <!-- Goals will be loaded here -->
+                </div>
+            </div>
+        </section><!-- Interest Rates Section -->
+        <section id="interests" class="min-h-screen py-20 bg-white">
+            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                <div class="mb-12">
+                    <h2 class="text-4xl font-bold text-gray-800 mb-3">อัตราดอกเบี้ย</h2>
+                    <p class="text-gray-600 text-lg">อัปเดตอัตราดอกเบี้ยเงินฝากจากธนาคารต่างๆ <span
+                            class="text-teal-600 text-sm font-semibold ml-2 bg-teal-50 px-3 py-1 rounded-full"><i
+                                class="fas fa-check-circle mr-1"></i>อัปเดตวันนี้</span></p>
+                </div>
+                <div id="interest-rates-grid" class="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
+                    <!-- Interest rates will be loaded here -->
                 </div>
             </div>
         </section><!-- Investment News Section -->
@@ -551,11 +497,13 @@
                             <div>
                                 <p class="text-sm text-gray-600 mb-1">อัตราเงินเฟ้อปัจจุบัน (CPI)</p>
                                 <div class="flex items-center space-x-3">
-                                    <p class="text-3xl font-bold text-teal-700" id="inflation-rate-display">กำลังโหลด...
+                                    <p class="text-3xl font-bold text-teal-700" id="inflation-rate-display">
+                                        กำลังโหลด...
                                     </p><span
                                         class="text-xs bg-green-500 text-white px-3 py-1 rounded-full pulse-dot">LIVE</span>
                                 </div>
-                                <p class="text-xs text-gray-500 mt-1" id="inflation-update-date">อัปเดต: -</p>
+                                <p class="text-xs text-gray-500 mt-1" id="inflation-update-date">อัปเดต: -
+                                </p>
                                 <p class="text-xs text-teal-600 mt-2" id="inflation-source">ข้อมูลจาก:
                                     ธนาคารแห่งประเทศไทย</p>
                             </div>
@@ -573,9 +521,11 @@
                         <div><label for="inflation-rate" class="block text-sm font-semibold text-gray-700 mb-2">
                                 อัตราเงินเฟ้อต่อปี (%) </label> <input type="number" id="inflation-rate"
                                 placeholder="2.41" step="0.01" required>
-                            <p class="text-xs text-gray-500 mt-1">ใช้อัตราเงินเฟ้อปัจจุบัน หรือกรอกค่าเอง</p>
+                            <p class="text-xs text-gray-500 mt-1">ใช้อัตราเงินเฟ้อปัจจุบัน หรือกรอกค่าเอง
+                            </p>
                         </div>
-                        <div><label for="years" class="block text-sm font-semibold text-gray-700 mb-2"> จำนวนปี </label>
+                        <div><label for="years" class="block text-sm font-semibold text-gray-700 mb-2">
+                                จำนวนปี </label>
                             <input type="number" id="years" placeholder="10" min="1" required>
                         </div><button type="submit" class="btn-primary w-full text-lg"> <i
                                 class="fas fa-calculator mr-2"></i>คำนวณ </button>
@@ -599,7 +549,8 @@
                             <div class="flex items-start"><i class="fas fa-lightbulb text-yellow-600 mt-1 mr-3"></i>
                                 <div>
                                     <p class="font-semibold text-gray-800 mb-1">คำแนะนำ</p>
-                                    <p class="text-sm text-gray-700" id="advice-text">เงิน 100,000 บาท ในวันนี้
+                                    <p class="text-sm text-gray-700" id="advice-text">เงิน 100,000 บาท
+                                        ในวันนี้
                                         จะมีมูลค่าเทียบเท่า XX,XXX บาท ใน X ปีข้างหน้า</p>
                                 </div>
                             </div>
@@ -620,7 +571,8 @@
                                 class="fas fa-shield-alt text-blue-700"></i>
                         </div>
                         <h4 class="font-bold text-gray-800 mb-2">ป้องกันผลกระทบ</h4>
-                        <p class="text-sm text-gray-600">ลงทุนในสินทรัพย์ที่ให้ผลตอบแทนสูงกว่าอัตราเงินเฟ้อ เช่น หุ้น
+                        <p class="text-sm text-gray-600">ลงทุนในสินทรัพย์ที่ให้ผลตอบแทนสูงกว่าอัตราเงินเฟ้อ
+                            เช่น หุ้น
                             กองทุน อสังหาฯ</p>
                     </div>
                     <div class="bg-white rounded-xl p-6 shadow-soft">
@@ -639,8 +591,8 @@
                     onclick="closeModals()" class="absolute top-4 right-4 text-gray-400 hover:text-gray-600"> <i
                         class="fas fa-times text-xl"></i> </button>
                 <div class="text-center mb-8">
-                    <div class="w-16 h-16 gradient-bg rounded-2xl flex items-center justify-center mx-auto mb-4"><i
-                            class="fas fa-user text-white text-2xl"></i>
+                    <div class="w-16 h-16 gradient-bg rounded-2xl flex items-center justify-center mx-auto mb-4">
+                        <i class="fas fa-user text-white text-2xl"></i>
                     </div>
                     <h3 class="text-2xl font-bold text-gray-800 mb-2">เข้าสู่ระบบ</h3>
                     <p class="text-gray-600">ยินดีต้อนรับกลับมา!</p>
@@ -653,13 +605,14 @@
                             class="block text-sm font-semibold text-gray-700 mb-2">รหัสผ่าน</label> <input
                             type="password" id="login-password" placeholder="••••••••" required>
                     </div>
-                    <div class="flex items-center justify-between text-sm"><label class="flex items-center"> <input
-                                type="checkbox" class="mr-2"> <span class="text-gray-600">จดจำฉัน</span> </label> <a
-                            href="#" class="text-teal-600 hover:text-teal-700 font-semibold">ลืมรหัสผ่าน?</a>
+                    <div class="flex items-center justify-between text-sm"><label class="flex items-center">
+                            <input type="checkbox" class="mr-2"> <span class="text-gray-600">จดจำฉัน</span>
+                        </label> <a href="#" class="text-teal-600 hover:text-teal-700 font-semibold">ลืมรหัสผ่าน?</a>
                     </div><button type="submit" class="btn-primary w-full">เข้าสู่ระบบ</button>
                 </form>
                 <p class="text-center text-sm text-gray-600 mt-6">ยังไม่มีบัญชี? <button onclick="showRegister()"
-                        class="text-teal-600 hover:text-teal-700 font-semibold"> สมัครสมาชิก </button></p>
+                        class="text-teal-600 hover:text-teal-700 font-semibold">
+                        สมัครสมาชิก </button></p>
             </div>
         </div><!-- Register Modal -->
         <div id="register-modal"
@@ -668,16 +621,16 @@
                     onclick="closeModals()" class="absolute top-4 right-4 text-gray-400 hover:text-gray-600"> <i
                         class="fas fa-times text-xl"></i> </button>
                 <div class="text-center mb-8">
-                    <div class="w-16 h-16 gradient-bg rounded-2xl flex items-center justify-center mx-auto mb-4"><i
-                            class="fas fa-user-plus text-white text-2xl"></i>
+                    <div class="w-16 h-16 gradient-bg rounded-2xl flex items-center justify-center mx-auto mb-4">
+                        <i class="fas fa-user-plus text-white text-2xl"></i>
                     </div>
                     <h3 class="text-2xl font-bold text-gray-800 mb-2">สมัครสมาชิก</h3>
                     <p class="text-gray-600">สร้างบัญชีใหม่</p>
                 </div>
                 <form onsubmit="handleRegister(event)" class="space-y-4">
                     <div><label for="register-name"
-                            class="block text-sm font-semibold text-gray-700 mb-2">ชื่อ-นามสกุล</label> <input
-                            type="text" id="register-name" placeholder="ชื่อของคุณ" required>
+                            class="block text-sm font-semibold text-gray-700 mb-2">ชื่อ-นามสกุล</label>
+                        <input type="text" id="register-name" placeholder="ชื่อของคุณ" required>
                     </div>
                     <div><label for="register-email"
                             class="block text-sm font-semibold text-gray-700 mb-2">อีเมล</label> <input type="email"
@@ -688,17 +641,115 @@
                             type="password" id="register-password" placeholder="••••••••" required>
                     </div>
                     <div><label for="register-confirm"
-                            class="block text-sm font-semibold text-gray-700 mb-2">ยืนยันรหัสผ่าน</label> <input
-                            type="password" id="register-confirm" placeholder="••••••••" required>
+                            class="block text-sm font-semibold text-gray-700 mb-2">ยืนยันรหัสผ่าน</label>
+                        <input type="password" id="register-confirm" placeholder="••••••••" required>
                     </div><label class="flex items-start text-sm"> <input type="checkbox" class="mt-1 mr-2" required>
                         <span class="text-gray-600"> ฉันยอมรับ <a href="#"
-                                class="text-teal-600 hover:text-teal-700 font-semibold">ข้อกำหนดการใช้งาน</a> และ <a
-                                href="#"
+                                class="text-teal-600 hover:text-teal-700 font-semibold">ข้อกำหนดการใช้งาน</a>
+                            และ <a href="#"
                                 class="text-teal-600 hover:text-teal-700 font-semibold">นโยบายความเป็นส่วนตัว</a>
                         </span> </label> <button type="submit" class="btn-primary w-full">สมัครสมาชิก</button>
                 </form>
                 <p class="text-center text-sm text-gray-600 mt-6">มีบัญชีอยู่แล้ว? <button onclick="showLogin()"
-                        class="text-teal-600 hover:text-teal-700 font-semibold"> เข้าสู่ระบบ </button></p>
+                        class="text-teal-600 hover:text-teal-700 font-semibold">
+                        เข้าสู่ระบบ </button></p>
+            </div>
+        </div>
+        <!-- Goal Analysis Modal -->
+        <div id="analysis-modal"
+            class="fixed inset-0 bg-black bg-opacity-50 hidden items-center justify-center z-50 px-4">
+            <div class="bg-white rounded-3xl max-w-lg w-full p-8 relative animate-fade-in"><button
+                    onclick="closeModals()" class="absolute top-4 right-4 text-gray-400 hover:text-gray-600"> <i
+                        class="fas fa-times text-xl"></i>
+                </button>
+                <div class="mb-6">
+                    <div class="flex items-center justify-between mb-2">
+                        <div class="flex items-center space-x-3">
+                            <div
+                                class="w-10 h-10 bg-indigo-100 rounded-lg flex items-center justify-center text-indigo-600">
+                                <i class="fas fa-chart-line text-xl"></i>
+                            </div>
+                            <h3 class="text-2xl font-bold text-gray-800" id="analysis-title">วิเคราะห์เป้าหมาย</h3>
+                        </div>
+                        <button onclick="toggleFormula()" class="text-gray-400 hover:text-indigo-600 transition"
+                            title="ดูสูตรการคำนวณ">
+                            <i class="fas fa-circle-question text-xl"></i>
+                        </button>
+                    </div>
+                    <p class="text-gray-600">ประเมินความเป็นไปได้ตามพฤติกรรมการใช้จ่ายของคุณ</p>
+
+                    <!-- Formula Explanation (Hidden) -->
+                    <div id="formula-info"
+                        class="hidden mt-4 bg-gray-50 p-4 rounded-xl border border-gray-200 text-sm animate-fade-in relative">
+                        <button onclick="toggleFormula()"
+                            class="absolute top-2 right-2 text-gray-400 hover:text-gray-600"><i
+                                class="fas fa-times"></i></button>
+                        <h4 class="font-bold text-indigo-700 mb-2">📊 หลักการคำนวณ</h4>
+                        <ul class="space-y-2 text-gray-600">
+                            <li><strong>1. เป้าหมายจริง:</strong> คำนวณตามอัตราเงินเฟ้อ (Target × (1+Inflation)^Years)
+                            </li>
+                            <li><strong>2. ความเป็นไปได้ (Z-Score):</strong>
+                                <br><code
+                                    class="bg-white px-2 py-0.5 rounded border">Probability = (เงินออมเฉลี่ย - เงินที่ต้องเก็บ) / ความผันผวน</code>
+                            </li>
+                            <li><strong>3. การประเมิน:</strong> ถ้าคุณออมได้มากกว่าที่ต้องเก็บ 1.5 เท่า = 95%
+                                (มั่นคงมาก)
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="space-y-6">
+                    <!-- Probability Score -->
+                    <div class="bg-gradient-to-r from-gray-50 to-gray-100 rounded-2xl p-6 text-center">
+                        <p class="text-sm text-gray-500 mb-2">โอกาสสำเร็จ</p>
+                        <div class="flex items-center justify-center space-x-2">
+                            <div class="relative w-32 h-32">
+                                <svg class="w-full h-full transform -rotate-90">
+                                    <circle cx="64" cy="64" r="56" stroke="white" stroke-width="12" fill="none"
+                                        class="text-gray-200" />
+                                    <circle id="probability-circle" cx="64" cy="64" r="56" stroke="currentColor"
+                                        stroke-width="12" fill="none" stroke-dasharray="351.86"
+                                        stroke-dashoffset="351.86"
+                                        class="text-indigo-600 transition-all duration-1000 ease-out" />
+                                </svg>
+                                <div class="absolute inset-0 flex items-center justify-center flex-col">
+                                    <span class="text-3xl font-bold text-gray-800" id="analysis-percent">0%</span>
+                                </div>
+                            </div>
+                        </div>
+                        <p class="text-sm font-medium mt-2" id="analysis-status">กำลังคำนวณ...</p>
+                    </div>
+
+                    <!-- Details -->
+                    <div class="space-y-3 text-sm">
+                        <div class="flex justify-between items-center p-3 bg-red-50 rounded-xl">
+                            <span class="text-gray-600"><i class="fas fa-arrow-trend-up mr-2 text-red-500"></i>เงินเฟ้อ
+                                (เฉลี่ย)</span>
+                            <span class="font-bold text-gray-800" id="analysis-inflation-rate">2.5%</span>
+                        </div>
+                        <div class="flex justify-between items-center p-3 bg-blue-50 rounded-xl">
+                            <span class="text-gray-600"><i
+                                    class="fas fa-bullseye mr-2 text-blue-500"></i>เป้าหมายที่แท้จริง</span>
+                            <span class="font-bold text-blue-700" id="analysis-real-target">฿0</span>
+                        </div>
+                        <div class="flex justify-between items-center p-3 bg-green-50 rounded-xl">
+                            <span class="text-gray-600"><i
+                                    class="fas fa-piggy-bank mr-2 text-green-500"></i>เงินเก็บเฉลี่ย/เดือน</span>
+                            <span class="font-bold text-green-700" id="analysis-avg-savings">฿0</span>
+                        </div>
+                    </div>
+
+                    <!-- Suggestions -->
+                    <div id="analysis-suggestions" class="hidden">
+                        <h4 class="font-bold text-gray-800 mb-3"><i
+                                class="fas fa-lightbulb text-yellow-500 mr-2"></i>คำแนะนำ</h4>
+                        <ul class="space-y-2 text-sm text-gray-600 bg-yellow-50 p-4 rounded-xl list-disc pl-8"
+                            id="suggestion-list">
+                            <!-- JS will populate this -->
+                        </ul>
+                    </div>
+                </div>
             </div>
         </div>
     </div><!-- Footer -->
@@ -709,7 +760,7 @@
                     <div class="flex items-center space-x-3 mb-4">
                         <div class="w-10 h-10 gradient-bg rounded-lg flex items-center justify-center"><i
                                 class="fas fa-chart-line text-white text-xl"></i>
-                        </div><span class="text-xl font-bold" id="footer-company-name">FinTrack</span>
+                        </div><span class="text-xl font-bold" id="footer-company-name">SNK_ZD</span>
                     </div>
                     <p class="text-gray-400 text-sm">แพลตฟอร์มจัดการการเงินส่วนบุคคลที่ทันสมัย
                         ช่วยให้คุณควบคุมเงินได้ดีขึ้น</p>
@@ -747,7 +798,8 @@
                 </div>
             </div>
             <div class="border-t border-gray-800 mt-8 pt-8 text-center text-sm text-gray-400">
-                <p>© 2024 FinTrack. All rights reserved. | <a href="#" class="hover:text-teal-400">Privacy Policy</a> |
+                <p>© 2024 SNK_ZD. All rights reserved. | <a href="#" class="hover:text-teal-400">Privacy
+                        Policy</a> |
                     <a href="#" class="hover:text-teal-400">Terms of Service</a>
                 </p>
             </div>
